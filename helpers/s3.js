@@ -1,5 +1,6 @@
 const S3 = require('aws-sdk/clients/s3');
 const fs = require('fs');
+const db = require('./db')
 
 const region = process.env.AWS_REGION;
 const accessKeyId = process.env.AWS_ACCESS_KEY;
@@ -25,7 +26,18 @@ const uploadToBucket = (bucketName,file) => {
     return storage.upload(params).promise();
 };
 
+const uploadToDB = async (name, file) => {
+    try {
+        const rows = await db.execute('INSERT INTO docs (name) VALUES (?)', [name]);
+        db.end();
+        return rows;
+    } catch (error) {
+        throw new Error('Error al subir a la base de datos: ' + error.message);
+    }
+};
+
 module.exports = {
     getBuckets,
-    uploadToBucket
+    uploadToBucket,
+    uploadToDB
 };

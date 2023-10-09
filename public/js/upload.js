@@ -7,9 +7,11 @@ btnUpload.addEventListener('click',e=>{
 
     const bucket = document.querySelector('#buckets').value;
     const file = document.querySelector('#file').files[0];
+    const name = document.querySelector('#name').value;
 
     const formData = new FormData();
     formData.append('bucket',bucket);
+    formData.append('name',name);
     formData.append('file',file);
 
     uploadFile(formData);
