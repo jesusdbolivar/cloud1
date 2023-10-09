@@ -49,6 +49,16 @@
                     </td>
                 </tr>
             </table>
+            <table class="table table-bordered">
+                <tr>
+                    <td>name</td>                    
+                </tr>                
+                    {{#each docs}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                        </tr>
+                    {{/each}} 
+            </table>
         </div>
     </div>
     <script src="js/upload.js"></script>

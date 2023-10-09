@@ -29,15 +29,30 @@ const uploadToBucket = (bucketName,file) => {
 const uploadToDB = async (name, file) => {
     try {
         const rows = await db.execute('INSERT INTO docs (name) VALUES (?)', [name]);
-        db.end();
+        
         return rows;
     } catch (error) {
         throw new Error('Error al subir a la base de datos: ' + error.message);
     }
 };
 
+const getDocs = async () => {
+    try {
+        const rows = await new Promise((resolve, reject) => {
+            db.query("SELECT * FROM docs", (err, rows) => {
+                if (err) reject(err);
+                resolve(rows);
+            });
+        });
+        return rows;
+    } catch (error) {
+        throw new Error('Error al obtener los documentos: ' + error.message);
+    }
+}
+
 module.exports = {
     getBuckets,
     uploadToBucket,
-    uploadToDB
+    uploadToDB,
+    getDocs
 };
